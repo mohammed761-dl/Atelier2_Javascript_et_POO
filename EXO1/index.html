@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Liste des voitures</title>
+</head>
+<body>
+    <div class="container">
+        <!--question2 -->
+        <h1 class="mt-5 mb-4">Liste des voitures</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Marque</th>
+                    <th scope="col">Modèle</th>
+                    <th scope="col">Année</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Carburant</th>
+                </tr>
+            </thead>
+            <tbody id="listeVoitures">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+
+        //question1:
+        class Voiture {
+            constructor(model, marque, année, type_, carburant) {
+                this.model = model;
+                this.marque = marque;
+                this.année = année;
+                this.type = type_;
+                this.carburant = carburant;
+            }
+        }
+        //question3 :
+        class Hyundai extends Voiture {
+            constructor(model, année, type_, carburant, série, hybride) {
+                super(model, "Hyundai", année, type_, carburant);
+                this.série = série;
+                this.hybride = hybride;
+            }
+            
+            alarmer() {
+                console.log("Alarme Hyundai activée!");
+            }
+        }
+
+        class Ford extends Voiture {
+            constructor(model, année, type_, carburant, options) {
+                super(model, "Ford", année, type_, carburant);
+                this.options = options;
+            }
+        }
+
+        // Création d'une liste de voitures question2:
+        let voitures = [
+            new Hyundai("i30", 2019, "Sedan", "Essence", "Série A", false),
+            new Ford("Mustang", 2018, "Coupé", "Essence", ["Climatisation", "Sièges chauffants"]),
+            new Hyundai("Tucson", 2020, "SUV", "Hybride", "Série B", true),
+            new Ford("Focus", 2017, "Hatchback", "Diesel", ["Caméra de recul", "GPS"])
+        ];
+
+        // question4: 
+        voitures.sort((a, b) => a.année - b.année);
+
+        // Afficher les voitures triées
+        let listeVoituresElement = document.getElementById("listeVoitures");
+        voitures.forEach(voiture => {
+            let voitureRow = document.createElement("tr");
+            voitureRow.innerHTML = `
+                <td>${voiture.marque}</td>
+                <td>${voiture.model}</td>
+                <td>${voiture.année}</td>
+                <td>${voiture.type}</td>
+                <td>${voiture.carburant}</td>
+            `;
+            listeVoituresElement.appendChild(voitureRow);
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

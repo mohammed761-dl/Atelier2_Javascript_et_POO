@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Étudiants et Professeurs</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5 mb-4">Liste des Étudiants</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Âge</th>
+                    <th scope="col">CNE</th>
+                </tr>
+            </thead>
+            <tbody id="listeEtudiants">
+            </tbody>
+        </table>
+
+        <h1 class="mt-5 mb-4">Liste des Professeurs</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Âge</th>
+                    <th scope="col">CIN</th>
+                </tr>
+            </thead>
+            <tbody id="listeProfesseurs">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        class Etudiant {
+            constructor(nom, prenom, age, cne) {
+                this.nom = nom;
+                this.prenom = prenom;
+                this.age = age;
+                this.cne = cne;
+            }
+
+            étudier() {
+                console.log(`${this.nom} ${this.prenom} étudie.`);
+            }
+        }
+
+        class Professeur {
+            constructor(nom, age, cin) {
+                this.nom = nom;
+                this.age = age;
+                this.cin = cin;
+            }
+
+            enseigner() {
+                console.log(`${this.nom} enseigne.`);
+            }
+        }
+
+        let étudiants = [
+            new Etudiant("Smith", "John", 20, "12345"),
+            new Etudiant("Doe", "Jane", 22, "54321"),
+            new Etudiant("Johnson", "David", 21, "98765")
+        ];
+
+        let professeurs = [
+            new Professeur("Brown", 35, "ABCDE"),
+            new Professeur("Wilson", 40, "FGHIJ"),
+            new Professeur("Taylor", 38, "KLMNO")
+        ];
+
+        // Trier les étudiants par ordre alphabétique du nom et prénom
+        étudiants.sort((a, b) => {
+            if (a.nom === b.nom) {
+                return a.prenom.localeCompare(b.prenom);
+            }
+            return a.nom.localeCompare(b.nom);
+        });
+
+        let listeEtudiantsElement = document.getElementById("listeEtudiants");
+        let listeProfesseursElement = document.getElementById("listeProfesseurs");
+
+        // Afficher les étudiants triés
+        étudiants.forEach(étudiant => {
+            let étudiantRow = document.createElement("tr");
+            étudiantRow.innerHTML = `
+                <td>${étudiant.nom}</td>
+                <td>${étudiant.prenom}</td>
+                <td>${étudiant.age}</td>
+                <td>${étudiant.cne}</td>
+            `;
+            listeEtudiantsElement.appendChild(étudiantRow);
+        });
+
+        // Afficher les professeurs
+        professeurs.forEach(professeur => {
+            let professeurRow = document.createElement("tr");
+            professeurRow.innerHTML = `
+                <td>${professeur.nom}</td>
+                <td>${professeur.age}</td>
+                <td>${professeur.cin}</td>
+            `;
+            listeProfesseursElement.appendChild(professeurRow);
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

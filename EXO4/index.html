@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #F9F7F7;
+        }
+
+        .navbar-brand {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 2rem;
+        }
+
+        .navbar-nav .nav-link {
+            font-family: 'Lobster', cursive;
+            font-size: 1.2rem;
+        }
+
+        #post-form {
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #blog-posts .list-group-item {
+            background-color: #FFFFFF;
+            border: none;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        #add-post-btn {
+            background-color: #800080;
+            border-color: #800080;
+            color: #FFFFFF;
+        }
+
+        #submit-post-btn {
+            background-color: #800080;
+            border-color: #800080;
+            color: #FFFFFF;
+        }
+
+        h1, h2 {
+            font-family: 'Lobster', cursive;
+        }
+    </style>
+    <title>Code Wall</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Code Wall</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="my-blogs">My Blogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="login">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="sign-up">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Your Blog Posts</h2>
+                <ul id="blog-posts" class="list-group"></ul>
+                <button id="add-post-btn" class="btn btn-purple mt-3">Add New Post</button>
+            </div>
+            <div class="col-md-8">
+                <h1>Welcome to Code Wall</h1>
+                <div id="new-post-form" style="display: none;">
+                    <h2>Add New Post</h2>
+                    <input type="text" id="post-title" class="form-control mb-2" placeholder="Enter title...">
+                    <textarea id="post-content" class="form-control mb-2" rows="5" placeholder="Write your blog..."></textarea>
+                    <button id="submit-post-btn" class="btn btn-purple">Submit Post</button>
+                </div>
+                <h2>Your Posts</h2>
+                <ul id="user-posts" class="list-group"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("add-post-btn").addEventListener("click", function() {
+            document.getElementById("new-post-form").style.display = "block";
+        });
+
+        document.getElementById("submit-post-btn").addEventListener("click", function() {
+            let title = document.getElementById("post-title").value;
+            let content = document.getElementById("post-content").value;
+            let user = "Current User"; // You should replace "Current User" with the actual logged-in user's name
+            let post = new Post(title, content, user);
+            blog.addPost(post);
+            displayPosts();
+        });
+
+        class User {
+            constructor(username, email) {
+                this.username = username;
+                this.email = email;
+            }
+        }
+
+        class Post {
+            constructor(title, content, author) {
+                this.title = title;
+                this.content = content;
+                this.author = author;
+            }
+        }
+
+        class MiniBlog {
+            constructor() {
+                this.users = [];
+                this.posts = [];
+            }
+
+            addUser(user) {
+                this.users.push(user);
+            }
+
+            addPost(post) {
+                this.posts.push(post);
+            }
+
+            listPosts() {
+                this.posts.forEach(post => {
+                    console.log(`Title: ${post.title}`);
+                    console.log(`Content: ${post.content}`);
+                    console.log(`Author: ${post.author}`);
+                    console.log("-----------");
+                });
+            }
+        }
+
+        // Creating user instances
+        let user1 = new User("Alice", "alice@example.com");
+        let user2 = new User("Bob", "bob@example.com");
+
+        // Creating a MiniBlog instance
+        let blog = new MiniBlog();
+
+        // Adding users to the mini-blog
+        blog.addUser(user1);
+        blog.addUser(user2);
+
+        // Display initial posts (empty)
+        displayPosts();
+
+        // Function to display posts in the list
+        function displayPosts() {
+            let blogPostsElement = document.getElementById("blog-posts");
+            blogPostsElement.innerHTML = ""; // Clear the previous content
+            blog.posts.forEach(post => {
+                let postItem = document.createElement("li");
+                postItem.classList.add("list-group-item");
+                postItem.innerHTML = `<h5>${post.title}</h5><p>${post.content}</p><small>Author: ${post.author}</small>`;
+                blogPostsElement.appendChild(postItem);
+            });
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

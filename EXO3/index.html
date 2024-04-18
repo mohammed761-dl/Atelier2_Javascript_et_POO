@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Exercice Vecteurs et Formes</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5 mb-4">Vecteurs</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Vecteur</th>
+                    <th scope="col">Coordonnées</th>
+                </tr>
+            </thead>
+            <tbody id="vecteursBody">
+            </tbody>
+        </table>
+
+        <h1 class="mt-5 mb-4">Formes</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Forme</th>
+                    <th scope="col">Surface</th>
+                </tr>
+            </thead>
+            <tbody id="formesBody">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        class Vecteur2D {
+            constructor(x = 0, y = 0) {
+                this.x = x;
+                this.y = y;
+            }
+
+            afficher() {
+                return `(${this.x}, ${this.y})`;
+            }
+
+            static additionner(vecteur1, vecteur2) {
+                return new Vecteur2D(vecteur1.x + vecteur2.x, vecteur1.y + vecteur2.y);
+            }
+        }
+
+        class Rectangle {
+            constructor(longueur = 1, largeur = 1) {
+                this.longueur = longueur;
+                this.largeur = largeur;
+                this.nom = "rectangle";
+            }
+
+            afficher() {
+                return `${this.nom}: Longueur = ${this.longueur}, Largeur = ${this.largeur}`;
+            }
+
+            surface() {
+                return this.longueur * this.largeur;
+            }
+        }
+
+        class Carre extends Rectangle {
+            constructor(cote = 1) {
+                super(cote, cote);
+                this.nom = "carré";
+            }
+        }
+
+        class Point {
+            constructor(x = 0.0, y = 0.0) {
+                this.x = x;
+                this.y = y;
+            }
+        }
+
+        class Segment {
+            constructor(x1, y1, x2, y2) {
+                this.orig = new Point(x1, y1);
+                this.extrem = new Point(x2, y2);
+            }
+        }
+
+        // Programme principal
+
+        // Vecteurs
+        let vecteur1 = new Vecteur2D();
+        let vecteur2 = new Vecteur2D(3, 4);
+        let sommeVecteurs = Vecteur2D.additionner(vecteur1, vecteur2);
+
+        let vecteursBody = document.getElementById("vecteursBody");
+        [vecteur1, vecteur2, sommeVecteurs].forEach((vecteur, index) => {
+            let row = vecteursBody.insertRow(index);
+            let cell1 = row.insertCell(0);
+            let cell2 = row.insertCell(1);
+            cell1.textContent = `Vecteur ${index + 1}`;
+            cell2.textContent = vecteur.afficher();
+        });
+
+        // Formes
+        let rectangle = new Rectangle(5, 3);
+        let carre = new Carre(4);
+
+        let formesBody = document.getElementById("formesBody");
+        [rectangle, carre].forEach((forme, index) => {
+            let row = formesBody.insertRow(index);
+            let cell1 = row.insertCell(0);
+            let cell2 = row.insertCell(1);
+            cell1.textContent = forme.nom;
+            cell2.textContent = forme.surface();
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
